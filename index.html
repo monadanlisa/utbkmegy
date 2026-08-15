@@ -1,325 +1,342 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kuis HOTS UTBK/TKA IPS - Hari 1</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        body { font-family: 'Inter', sans-serif; }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Soal dari Bumona untuk Megy - Day 1</title>
+  <style>
+    :root {
+      --bg: #f8fafc;
+      --card: #ffffff;
+      --text: #1e293b;
+      --primary: #4f46e5;
+      --primary-hover: #4338ca;
+      --success: #10b981;
+      --danger: #ef4444;
+      --border: #e2e8f0;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      margin: 0;
+      padding: 16px;
+    }
+    .container {
+      max-width: 680px;
+      margin: 0 auto;
+    }
+    .header {
+      background: linear-gradient(135deg, #4f46e5, #7c3aed);
+      color: white;
+      padding: 24px;
+      border-radius: 16px;
+      margin-bottom: 24px;
+      text-align: center;
+      box-shadow: 0 10px 15px -3px rgba(79, 70, 229, 0.2);
+    }
+    .header h1 {
+      margin: 0 0 8px 0;
+      font-size: 1.5rem;
+    }
+    .header p {
+      margin: 0;
+      opacity: 0.9;
+      font-size: 0.95rem;
+    }
+    .card {
+      background: var(--card);
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 20px;
+      border: 1px solid var(--border);
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    }
+    .badge {
+      display: inline-block;
+      background: #e0e7ff;
+      color: #3730a3;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 20px;
+      margin-bottom: 12px;
+      text-transform: uppercase;
+    }
+    .question-title {
+      font-weight: 600;
+      font-size: 1.05rem;
+      margin-bottom: 16px;
+    }
+    .options {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .option-btn {
+      background: #f8fafc;
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      padding: 12px 16px;
+      text-align: left;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      color: var(--text);
+    }
+    .option-btn:hover {
+      border-color: var(--primary);
+      background: #f1f5f9;
+    }
+    .option-btn.correct {
+      background-color: #d1fae5 !important;
+      border-color: var(--success) !important;
+      color: #065f46 !important;
+      font-weight: 600;
+    }
+    .option-btn.wrong {
+      background-color: #fee2e2 !important;
+      border-color: var(--danger) !important;
+      color: #991b1b !important;
+    }
+    .explanation {
+      display: none;
+      margin-top: 16px;
+      padding: 14px;
+      border-radius: 10px;
+      background: #f1f5f9;
+      border-left: 4px solid var(--primary);
+      font-size: 0.9rem;
+    }
+    .hint-btn {
+      background: none;
+      border: none;
+      color: var(--primary);
+      font-size: 0.85rem;
+      cursor: pointer;
+      padding: 0;
+      margin-top: 10px;
+      text-decoration: underline;
+    }
+    .hint-text {
+      display: none;
+      font-size: 0.85rem;
+      color: #64748b;
+      margin-top: 6px;
+      font-style: italic;
+    }
+    .result-card {
+      display: none;
+      text-align: center;
+      padding: 30px;
+    }
+    .score-number {
+      font-size: 3rem;
+      font-weight: 800;
+      color: var(--primary);
+      margin: 10px 0;
+    }
+    .next-nav-btn {
+      display: inline-block;
+      margin-top: 20px;
+      background: var(--primary);
+      color: white;
+      padding: 12px 24px;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: background 0.2s ease;
+    }
+    .next-nav-btn:hover {
+      background: var(--primary-hover);
+    }
+  </style>
 </head>
-<body class="bg-slate-50 min-h-screen text-slate-800 flex flex-col justify-between">
+<body>
 
-    <!-- Header -->
-    <header class="bg-indigo-700 text-white shadow-md sticky top-0 z-50">
-        <div class="max-w-3xl mx-auto px-4 py-4 flex justify-between items-center">
-            <div>
-                <span class="bg-indigo-500 text-indigo-100 text-xs font-semibold px-2.5 py-0.5 rounded uppercase tracking-wider">Latihan UTBK/TKA IPS</span>
-                <h1 class="text-xl font-bold mt-1">Hari #1: Paket 5 Soal HOTS</h1>
-            </div>
-            <div class="text-right">
-                <span id="question-counter" class="text-sm font-medium text-indigo-200">Soal 1 dari 5</span>
-            </div>
-        </div>
-        <!-- Progress Bar -->
-        <div class="w-full bg-indigo-900 h-1.5">
-            <div id="progress-bar" class="bg-amber-400 h-1.5 transition-all duration-300" style="width: 20%;"></div>
-        </div>
-    </header>
+<div class="container">
+  <div class="header">
+    <h1>Soal dari Bumona untuk Megy</h1>
+    <p>Day 1 - TPS Penalaran Umum, Ekonomi & Bahasa Indonesia (UTBK/SNBT)</p>
+  </div>
 
-    <!-- Main Content Container -->
-    <main class="max-w-3xl mx-auto px-4 py-6 w-full flex-grow">
-        
-        <!-- Quiz Container -->
-        <div id="quiz-card" class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 md:p-8">
-            <!-- Mapel Badge -->
-            <div class="mb-4">
-                <span id="subject-badge" class="inline-block bg-amber-100 text-amber-800 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wide">
-                    Ekonomi
-                </span>
-            </div>
+  <!-- Soal 1 -->
+  <div class="card" id="q1">
+    <span class="badge">PENALARAN UMUM • LOGIKA FORMAL</span>
+    <div class="question-title">1. Semua siswa yang rajin belajar akan lulus UTBK dengan nilai tinggi. Sebagian siswa yang lulus UTBK dengan nilai tinggi mendapatkan beasiswa kuliah.<br><br>Kesimpulan yang paling tepat adalah...</div>
+    <div class="options">
+      <button class="option-btn" onclick="checkAnswer(1, 'A')">A. Semua siswa yang rajin belajar mendapatkan beasiswa kuliah.</button>
+      <button class="option-btn" onclick="checkAnswer(1, 'B')">B. Sebagian siswa yang rajin belajar mendapatkan beasiswa kuliah.</button>
+      <button class="option-btn" onclick="checkAnswer(1, 'C')">C. Semua siswa yang tidak rajin belajar tidak mendapatkan beasiswa kuliah.</button>
+      <button class="option-btn" onclick="checkAnswer(1, 'D')">D. Sebagian siswa yang tidak lulus UTBK adalah siswa yang rajin belajar.</button>
+      <button class="option-btn" onclick="checkAnswer(1, 'E')">E. Semua siswa yang mendapatkan beasiswa kuliah pasti tidak rajin belajar.</button>
+    </div>
+    <button class="hint-btn" onclick="toggleHint(1)">💡 Butuh Petunjuk?</button>
+    <div class="hint-text" id="hint1">Premis 1: Rajin -> Lulus Nilai Tinggi (Semua). Premis 2: Sebagian Lulus Nilai Tinggi -> Dapat Beasiswa. Jika gabungan menggunakan "sebagian", kesimpulan juga harus bernilai "sebagian".</div>
+    <div class="explanation" id="exp1">
+      <strong>Jawaban Benar: B</strong><br>
+      <em>Pembahasan:</em><br>
+      Sesuai hukum penarikan kesimpulan silogisme, jika salah satu premis bersifat khusus/partikular ("sebagian"), maka kesimpulan yang ditarik harus bersifat khusus/partikular ("sebagian"). Maka kesimpulan yang tepat adalah: <strong>Sebagian siswa yang rajin belajar mendapatkan beasiswa kuliah.</strong>
+    </div>
+  </div>
 
-            <!-- Question Text -->
-            <div class="mb-6">
-                <p id="question-text" class="text-base md:text-lg font-medium text-slate-900 leading-relaxed">
-                    Loading soal...
-                </p>
-            </div>
+  <!-- Soal 2 -->
+  <div class="card" id="q2">
+    <span class="badge">EKONOMI • BIAYA PELUANG (OPPORTUNITY COST)</span>
+    <div class="question-title">2. Setelah lulus SMA, Megy mendapatkan dua penawaran: bekerja di perusahaan A dengan gaji Rp4.500.000,00 per bulan, atau bekerja di perusahaan B dengan gaji Rp5.000.000,00 per bulan. Namun, Megy memilih untuk melanjutkan kuliah S1 di PTN impiannya. Berapakah besarnya <strong>biaya peluang (opportunity cost)</strong> Megy per bulan karena memilih kuliah?</div>
+    <div class="options">
+      <button class="option-btn" onclick="checkAnswer(2, 'A')">A. Rp4.500.000,00</button>
+      <button class="option-btn" onclick="checkAnswer(2, 'B')">B. Rp5.000.000,00</button>
+      <button class="option-btn" onclick="checkAnswer(2, 'C')">C. Rp9.500.000,00</button>
+      <button class="option-btn" onclick="checkAnswer(2, 'D')">D. Rp500.000,00</button>
+      <button class="option-btn" onclick="checkAnswer(2, 'E')">E. Rp0,00</button>
+    </div>
+    <button class="hint-btn" onclick="toggleHint(2)">💡 Butuh Petunjuk?</button>
+    <div class="hint-text" id="hint2">Biaya peluang diukur dari nilai kesempatan terbaik yang paling tinggi nilainya yang dikorbankan (ditinggalkan).</div>
+    <div class="explanation" id="exp2">
+      <strong>Jawaban Benar: B</strong><br>
+      <em>Pembahasan:</em><br>
+      Biaya peluang (opportunity cost) adalah nilai dari alternatif terbaik yang dikorbankan saat mengambil suatu pilihan. Antara bekerja di Perusahaan A (Rp4,5 juta) dan Perusahaan B (Rp5 juta), nilai tertinggi yang dikorbankan Megy saat memilih kuliah adalah gaji di Perusahaan B, yaitu <strong>Rp5.000.000,00</strong>.
+    </div>
+  </div>
 
-            <!-- Options Form -->
-            <div id="options-container" class="space-y-3 mb-6">
-                <!-- Options populated by JS -->
-            </div>
+  <!-- Soal 3 -->
+  <div class="card" id="q3">
+    <span class="badge">BAHASA INDONESIA • PBM & KATA BAKU</span>
+    <div class="question-title">3. Penulisan kata atau ejaan yang <strong>TIDAK tepat</strong> sesuai dengan PUEBI/EYD terdapat pada kalimat...</div>
+    <div class="options">
+      <button class="option-btn" onclick="checkAnswer(3, 'A')">A. Megy sedang mengontrol kualitas produk usaha mikronya secara teliti.</button>
+      <button class="option-btn" onclick="checkAnswer(3, 'B')">B. Ibu menasihati Megy agar selalu menjaga kualitas ibadah dan belajarnya.</button>
+      <button class="option-btn" onclick="checkAnswer(3, 'C')">C. Pemuda itu memiliki karakteristik pantang menyerah dalam menghadapi tantangan.</button>
+      <button class="option-btn" onclick="checkAnswer(3, 'D')">D. Kegiatan analisa data hasil kuis dilakukan secara periodik setiap minggu.</button>
+      <button class="option-btn" onclick="checkAnswer(3, 'E')">E. Praktik latihan soal secara rutin sangat membantu persiapan UTBK.</button>
+    </div>
+    <button class="hint-btn" onclick="toggleHint(3)">💡 Butuh Petunjuk?</button>
+    <div class="hint-text" id="hint3">Perhatikan kata "analisa" pada opsi D. Bagaimana bentuk serapan baku yang benar dalam Bahasa Indonesia?</div>
+    <div class="explanation" id="exp3">
+      <strong>Jawaban Benar: D</strong><br>
+      <em>Pembahasan:</em><br>
+      Kata <em>analisa</em> merupakan bentuk tidak baku. Bentuk baku yang benar sesuai PUEBI/EYD adalah <strong>analisis</strong>. Kata-kata lain pada pilihan seperti <em>kualitas, karakteristik, menasihati,</em> dan <em>praktik</em> sudah baku.
+    </div>
+  </div>
 
-            <!-- Rationale / Pembahasan (Hidden by default) -->
-            <div id="explanation-box" class="hidden mb-6 p-4 rounded-xl border border-slate-200 bg-slate-50">
-                <h4 id="explanation-title" class="font-bold text-sm mb-1">Pembahasan:</h4>
-                <p id="explanation-text" class="text-sm text-slate-700 leading-relaxed"></p>
-            </div>
+  <!-- Soal 4 -->
+  <div class="card" id="q4">
+    <span class="badge">PENALARAN MATEMATIKA • ARITMATIKA & PERSENTASE</span>
+    <div class="question-title">4. Sebuah toko buku memberikan diskon bertingkat untuk sebuah buku pelajaran, yaitu diskon pertama sebesar 20%, kemudian diberikan diskon tambahan lagi sebesar 10% dari harga setelah diskon pertama. Jika harga awal buku tersebut adalah Rp200.000,00, maka harga akhir yang harus dibayar adalah...</div>
+    <div class="options">
+      <button class="option-btn" onclick="checkAnswer(4, 'A')">A. Rp140.000,00</button>
+      <button class="option-btn" onclick="checkAnswer(4, 'B')">B. Rp144.000,00</button>
+      <button class="option-btn" onclick="checkAnswer(4, 'C')">C. Rp150.000,00</button>
+      <button class="option-btn" onclick="checkAnswer(4, 'D')">D. Rp160.000,00</button>
+      <button class="option-btn" onclick="checkAnswer(4, 'E')">E. Rp170.000,00</button>
+    </div>
+    <button class="hint-btn" onclick="toggleHint(4)">💡 Butuh Petunjuk?</button>
+    <div class="hint-text" id="hint4">1) Potong 20% dari Rp200.000 = Rp40.000 (Sisa Rp160.000). 2) Potong 10% dari sisa Rp160.000 = Rp16.000. Hitung harga akhirnya.</div>
+    <div class="explanation" id="exp4">
+      <strong>Jawaban Benar: B</strong><br>
+      <em>Pembahasan:</em><br>
+      1. Diskon I (20%): Rp200.000 × 20% = Rp40.000. Harga setelah diskon I = Rp200.000 - Rp40.000 = Rp160.000.<br>
+      2. Diskon II (10% dari sisa): Rp160.000 × 10% = Rp16.000.<br>
+      3. Harga akhir = Rp160.000 - Rp16.000 = <strong>Rp144.000,00</strong>.
+    </div>
+  </div>
 
-            <!-- Action Buttons -->
-            <div class="flex justify-between items-center pt-4 border-t border-slate-100">
-                <button id="hint-btn" onclick="toggleHint()" class="text-xs font-semibold text-indigo-600 hover:text-indigo-800 flex items-center gap-1">
-                    💡 Petunjuk Soal
-                </button>
-                <div class="space-x-2">
-                    <button id="submit-btn" onclick="checkAnswer()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-sm px-5 py-2.5 rounded-xl transition shadow-sm">
-                        Jawab & Cek
-                    </button>
-                    <button id="next-btn" onclick="nextQuestion()" class="hidden bg-slate-800 hover:bg-slate-900 text-white font-semibold text-sm px-5 py-2.5 rounded-xl transition shadow-sm">
-                        Soal Berikutnya &rarr;
-                    </button>
-                </div>
-            </div>
+  <!-- Soal 5 -->
+  <div class="card" id="q5">
+    <span class="badge">BAHASA INDONESIA • KALIMAT EFEKTIF</span>
+    <div class="question-title">5. Cermati kalimat berikut!<br><br>
+    <em>"Bagi siswa yang ingin mengikuti bimbingan belajar UTBK diharapkan untuk segera mendaftarkan diri sebelum kuota terpenuhi."</em><br><br>
+    Kalimat di atas tidak efektif karena tidak memiliki Subjek yang jelas akibat penggunaan preposisi (kata depan) di awal kalimat. Perbaikan kalimat tersebut agar menjadi <strong>kalimat efektif</strong> adalah...</div>
+    <div class="options">
+      <button class="option-btn" onclick="checkAnswer(5, 'A')">A. Menghilangkan kata <em>Bagi</em> di awal kalimat</button>
+      <button class="option-btn" onclick="checkAnswer(5, 'B')">B. Menghilangkan kata <em>diharapkan</em> setelah kata UTBK</button>
+      <button class="option-btn" onclick="checkAnswer(5, 'C')">C. Mengganti kata <em>mendaftarkan</em> menjadi <em>didaftarkan</em></button>
+      <button class="option-btn" onclick="checkAnswer(5, 'D')">D. Menambahkan kata <em>bahwa</em> setelah kata <em>diharapkan</em></button>
+      <button class="option-btn" onclick="checkAnswer(5, 'E')">E. Menghilangkan kata <em>untuk</em> sebelum kata <em>segera</em></button>
+    </div>
+    <button class="hint-btn" onclick="toggleHint(5)">💡 Butuh Petunjuk?</button>
+    <div class="hint-text" id="hint5">Penggunaan kata depan seperti "Bagi" di awal kalimat mengubah fungsi frasa subjek menjadi Keterangan. Hapus kata depan tersebut agar Subjek menjadi jelas.</div>
+    <div class="explanation" id="exp5">
+      <strong>Jawaban Benar: A</strong><br>
+      <em>Pembahasan:</em><br>
+      Penggunaan preposisi "Bagi" di awal kalimat membuat konstituen *siswa yang ingin mengikuti bimbingan belajar UTBK* berubah menjadi Keterangan (K). Akibatnya, kalimat tersebut tidak memiliki Subjek. Dengan **menghilangkan kata *Bagi***, kalimat menjadi efektif dengan struktur Subjek (S) dan Predikat (P) yang jelas.
+    </div>
+  </div>
 
-            <!-- Hint Modal / Text -->
-            <div id="hint-box" class="hidden mt-3 p-3 bg-amber-50 text-amber-800 rounded-lg text-xs border border-amber-200">
-                <span class="font-bold">Hint:</span> <span id="hint-text"></span>
-            </div>
-        </div>
+  <!-- Ringkasan Hasil -->
+  <div class="card result-card" id="resultCard">
+    <h2>🎉 Kuis Day 1 Selesai!</h2>
+    <p>Hasil Kuis Day 1 Megy:</p>
+    <div class="score-number" id="scoreText">0 / 5</div>
+    <p id="evalText" style="color: #475569; font-weight: 500;"></p>
 
-        <!-- Result Card (Hidden Initially) -->
-        <div id="result-card" class="hidden bg-white rounded-2xl shadow-sm border border-slate-200 p-8 text-center">
-            <div class="w-20 h-20 bg-indigo-100 text-indigo-600 rounded-full flex items-center justify-center mx-auto mb-4 text-3xl font-bold" id="score-circle">
-                0/5
-            </div>
-            <h2 class="text-2xl font-bold text-slate-900 mb-2">Latihan Hari 1 Selesai!</h2>
-            <p id="result-evaluation" class="text-slate-600 mb-6 text-sm md:text-base">
-                Hasil evaluasi akan muncul di sini.
-            </p>
-            <div class="p-4 bg-slate-50 rounded-xl mb-6 text-left border border-slate-200">
-                <h3 class="font-semibold text-slate-800 text-sm mb-2">Catatan Evaluasi Harian:</h3>
-                <ul class="text-xs text-slate-600 space-y-1 list-disc pl-5">
-                    <li>Evaluasi kembali soal yang masih salah melalui pembahasan.</li>
-                    <li>Pertahankan kebiasaan latihan 5 soal HOTS setiap hari secara teratur.</li>
-                    <li>Istirahat cukup dan siapkan mental untuk Paket Hari ke-2 besok!</li>
-                </ul>
-            </div>
-            <button onclick="restartQuiz()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-sm px-6 py-3 rounded-xl transition shadow-sm">
-                🔄 Ulangi Latihan Hari Ini
-            </button>
-        </div>
+    <!-- Navigasi Otomatis ke Day 2 -->
+    <a href="day2.html" class="next-nav-btn">Lanjut ke Day 2 ➔</a>
+  </div>
+</div>
 
-    </main>
+<script>
+  const correctAnswers = { 1: 'B', 2: 'B', 3: 'D', 4: 'B', 5: 'A' };
+  let userAnswers = {};
+  let answeredCount = 0;
 
-    <!-- Footer -->
-    <footer class="bg-white border-t border-slate-200 py-4 text-center text-xs text-slate-500">
-        <p>Program Latihan Harian UTBK & TKA IPS Kelas 12 PTN • Perjuangan Masuk PTN Impian</p>
-    </footer>
+  function checkAnswer(qNum, selectedOption) {
+    if (userAnswers[qNum]) return;
 
-    <!-- Quiz Logic & Questions Data -->
-    <script>
-        const quizData = [
-            {
-                subject: "Ekonomi",
-                question: "Ketika tingkat inflasi di suatu negara meningkat secara signifikan akibat tingginya jumlah uang yang beredar (demand-pull inflation), Bank Indonesia mengambil langkah kebijakan moneter kontraktif. Manakah kombinasi instrumen kebijakan moneter yang paling tepat dan efektif untuk meredam inflasi tersebut?",
-                options: [
-                    "Menurunkan suku bunga acuan (BI-Rate) dan membeli Surat Berharga Negara (SBN).",
-                    "Menaikkan Tingkat Diskonto dan menaikkan Giro Wajib Minimum (GWM) perbankan.",
-                    "Menurunkan Giro Wajib Minimum (GWM) serta memperluas penyaluran kredit UMKM.",
-                    "Membeli obligasi pemerintah dan mempermudah syarat pemberian kredit modal kerja.",
-                    "Menjual valuta asing di pasar domestik dan menurunkan suku bunga deposit facility."
-                ],
-                correct: 1,
-                hint: "Kebijakan kontraktif bertujuan menyedot atau mengurangi jumlah uang yang beredar di masyarakat dan perbankan.",
-                rationale: "Menaikkan Tingkat Diskonto (suku bunga pinjaman bank umum ke bank sentral) membuat bank enggan meminjam uang, dan menaikkan Giro Wajib Minimum (GWM) mewajibkan bank menyimpan cadangan kas lebih besar di BI. Kedua langkah ini secara langsung menyedot likuiditas dan mengurangi jumlah uang beredar untuk menekan inflasi."
-            },
-            {
-                subject: "Sosiologi",
-                question: "Perkembangan pesat e-commerce di Indonesia menggeser pola transaksi masyarakat desa dari pasar tradisional ke belanja online berbasis aplikasi. Fenomena ini mempermudah pemenuhan kebutuhan, namun memicu perilaku konsumerisme serta melonggarnya ikatan sosial solidaritas mekanik antar warga. Analisis sosiologis yang paling tepat mengenai dampak negatif fenomena tersebut adalah...",
-                options: [
-                    "Terjadinya cultural lag karena perkembangan teknologi material tidak diimbangi kesiapan norma dan perilaku bijak.",
-                    "Terjadinya cultural shock akibat ketidakmampuan penuh masyarakat desa dalam mengoperasikan aplikasi.",
-                    "Disintegrasi sosial total yang mengakibatkan hilangnya struktur hukum formal di pedesaan.",
-                    "Anomi sosial yang memicu konflik kelas terbuka antara pemilik platform digital dan warga desa.",
-                    "Asimilasi budaya mutlak yang menghapuskan identitas etnis asli masyarakat pedesaan."
-                ],
-                correct: 0,
-                hint: "Fokus pada ketimpangan kecepatan antara kemajuan teknologi fisik dengan kesiapan nilai/sikap mental masyarakat.",
-                rationale: "Cultural lag (ketertinggalan budaya) terjadi ketika unsur kebudayaan material (teknologi smartphone/e-commerce) berkembang sangat cepat, namun unsur imaterial (sikap hemat, kesadaran finansial, norma kebersamaan) belum siap menyesuaikan, sehingga memicu konsumerisme dan erosi nilai sosial."
-            },
-            {
-                subject: "Geografi",
-                question: "Kota A (pusat industri pengolahan) berjarak 40 km dari Kota B (wilayah hinterland kaya bahan baku pertanian dan tenaga kerja). Pemerintah membangun jalan tol yang menghubungkan kedua wilayah secara langsung. Berdasarkan konsep analisis keruangan, efek negatif utama (backwash effect) yang paling potensial dialami oleh Kota B adalah...",
-                options: [
-                    "Penurunan angka migrasi penduduk dari Kota B ke Kota A karena harga tanah Kota B melonjak.",
-                    "Tersedotnya modal ekonomi dan tenaga kerja berkualitas tinggi dari Kota B menuju Kota A.",
-                    "Terjadinya alih fungsi lahan besar-besaran di Kota A untuk menampung limbah dari Kota B.",
-                    "Terciptanya spread effect secara instan yang meratakan pendapatan tanpa perlu regulasi tambahan.",
-                    "Terhentinya total pasokan bahan pangan dari Kota B ke Kota A akibat mahal biaya tol."
-                ],
-                correct: 1,
-                hint: "Backwash effect mengacu pada dampak penarikan sumber daya dari daerah pinggiran/penyangga ke pusat pertumbuhan yang lebih kuat.",
-                rationale: "Menurut teori Gunnar Myrdal, koridor transportasi tanpa proteksi pengembangan daerah penyangga sering menimbulkan 'Backwash Effect', di mana modal, SDM terdidik, dan tenaga kerja produktif dari daerah hinterland (Kota B) makin tertarik mengalir ke pusat pertumbuhan utama (Kota A)."
-            },
-            {
-                subject: "Sejarah Indonesia",
-                question: "Pada krisis multidimensional 1998, gerakan mahasiswa dan masyarakat menuntut reformasi total atas tata kelola pemerintahan Orde Baru. Salah satu agenda utama Reformasi yang secara spesifik ditujukan untuk merestrukturisasi hubungan kekuasaan antara pemerintah pusat dan daerah adalah...",
-                options: [
-                    "Penerapan kembali Dwi Fungsi ABRI dalam menjaga stabilitas keamanan nasional.",
-                    "Pembentukan lembaga negara baru untuk membatasi hak pilih warga di daerah.",
-                    "Pelaksanaan Otonomi Daerah seluas-luasnya untuk memangkas sentralisme dan mencegah disintegrasi.",
-                    "Pemilihan Presiden secara langsung oleh parlemen setiap tiga tahun sekali.",
-                    "Nasionalisasi seluruh aset swasta asing di daerah untuk mendanai Anggaran Daerah."
-                ],
-                correct: 2,
-                hint: "Cari agenda kebijakan yang memberikan wewenang lebih besar kepada daerah agar tidak lagi bergantung penuh pada instruksi pemerintah pusat di Jakarta.",
-                rationale: "Pelaksanaan Otonomi Daerah (UU No. 22 Tahun 1999) merupakan jawaban atas masalah sentralisme kekuasaan Orde Baru. Kebijakan ini bertujuan memberikan wewenang luas kepada pemerintah daerah untuk mengelola sumber daya dan pembangunan secara mandiri demi pemerataan dan mencegah ancaman disintegrasi."
-            },
-            {
-                subject: "Penalaran Umum / Logika",
-                question: "Sebuah riset menunjukkan bahwa peningkatan ketersediaan taman olahraga publik berbanding lurus dengan penurunan tingkat stres masyarakat urban. Namun, Kota X yang baru membangun 10 taman terbuka justru mencatat kenaikan jumlah warga yang berobat ke klinik psikiatri karena gangguan kecemasan. Pernyataan manakah yang paling dapat menjelaskan kontradiksi tersebut?",
-                options: [
-                    "Taman olahraga di Kota X dibangun dekat kawasan pabrik berpolusi tinggi.",
-                    "Kesadaran dan aksesibilitas warga Kota X untuk memeriksakan kesehatan mental meningkat pesat seiring dibukanya layanan konsultasi kesehatan di sekitar fasilitas baru.",
-                    "Banyak warga Kota X yang lebih memilih berolahraga di tempat kebugaran swasta berbayar.",
-                    "Biaya pembuatan taman publik menguras anggaran daerah untuk sektor lain.",
-                    "Warga di kota urban lain jarang memanfaatkan fasilitas publik saat akhir pekan."
-                ],
-                correct: 1,
-                hint: "Pikirkan alasan mengapa jumlah kasus yang 'tercatat berobat' naik tanpa berarti jumlah orang yang kecemasan secara nyata bertambah buruk.",
-                rationale: "Pernyataan B berhasil menyelaraskan kontradiksi. Kenaikan angka pencatatan pasien berobat di klinik bukan berarti kesehatan mental warga memburuk akibat taman, melainkan karena ketersediaan fasilitas baru meningkatkan kesadaran (awareness) dan kemudahan warga untuk datang memeriksakan diri."
-            }
-        ];
+    userAnswers[qNum] = selectedOption;
+    answeredCount++;
 
-        let currentQuestion = 0;
-        let score = 0;
-        let selectedOption = null;
-        let answered = false;
+    const options = document.querySelectorAll(`#q${qNum} .option-btn`);
+    const correctOpt = correctAnswers[qNum];
 
-        function loadQuestion() {
-            const q = quizData[currentQuestion];
-            document.getElementById("subject-badge").innerText = q.subject;
-            document.getElementById("question-text").innerText = q.question;
-            document.getElementById("question-counter").innerText = `Soal ${currentQuestion + 1} dari ${quizData.length}`;
-            document.getElementById("progress-bar").style.width = `${((currentQuestion + 1) / quizData.length) * 100}%`;
-            
-            const optionsContainer = document.getElementById("options-container");
-            optionsContainer.innerHTML = "";
+    options.forEach(btn => {
+      btn.disabled = true;
+      const optLetter = btn.innerText.charAt(0);
+      if (optLetter === correctOpt) {
+        btn.classList.add('correct');
+      }
+      if (optLetter === selectedOption && selectedOption !== correctOpt) {
+        btn.classList.add('wrong');
+      }
+    });
 
-            q.options.forEach((opt, idx) => {
-                const btn = document.createElement("button");
-                btn.className = "w-full text-left p-4 rounded-xl border border-slate-200 hover:border-indigo-400 hover:bg-indigo-50/50 transition duration-150 flex items-start gap-3 option-btn";
-                btn.onclick = () => selectOption(idx);
-                btn.innerHTML = `
-                    <span class="w-6 h-6 rounded-full border border-slate-300 flex items-center justify-center text-xs font-semibold text-slate-500 shrink-0 mt-0.5 option-icon">
-                        ${String.fromCharCode(65 + idx)}
-                    </span>
-                    <span class="text-sm text-slate-700 font-normal leading-relaxed">${opt}</span>
-                `;
-                optionsContainer.appendChild(btn);
-            });
+    document.getElementById(`exp${qNum}`).style.display = 'block';
 
-            // Reset UI States
-            selectedOption = null;
-            answered = false;
-            document.getElementById("explanation-box").classList.add("hidden");
-            document.getElementById("hint-box").classList.add("hidden");
-            document.getElementById("submit-btn").classList.remove("hidden");
-            document.getElementById("next-btn").classList.add("hidden");
-            document.getElementById("hint-text").innerText = q.hint;
-        }
+    if (answeredCount === 5) {
+      showResults();
+    }
+  }
 
-        function selectOption(idx) {
-            if (answered) return;
-            selectedOption = idx;
-            const buttons = document.querySelectorAll(".option-btn");
-            buttons.forEach((btn, i) => {
-                if (i === idx) {
-                    btn.classList.add("border-indigo-600", "bg-indigo-50", "ring-2", "ring-indigo-600/20");
-                    btn.querySelector(".option-icon").classList.add("bg-indigo-600", "text-white", "border-indigo-600");
-                } else {
-                    btn.classList.remove("border-indigo-600", "bg-indigo-50", "ring-2", "ring-indigo-600/20");
-                    btn.querySelector(".option-icon").classList.remove("bg-indigo-600", "text-white", "border-indigo-600");
-                }
-            });
-        }
+  function toggleHint(qNum) {
+    const hint = document.getElementById(`hint${qNum}`);
+    hint.style.display = hint.style.display === 'block' ? 'none' : 'block';
+  }
 
-        function checkAnswer() {
-            if (selectedOption === null) {
-                alert("Pilih salah satu jawaban terlebih dahulu!");
-                return;
-            }
+  function showResults() {
+    let score = 0;
+    for (let i = 1; i <= 5; i++) {
+      if (userAnswers[i] === correctAnswers[i]) score++;
+    }
 
-            answered = true;
-            const q = quizData[currentQuestion];
-            const buttons = document.querySelectorAll(".option-btn");
+    const resultCard = document.getElementById('resultCard');
+    const scoreText = document.getElementById('scoreText');
+    const evalText = document.getElementById('evalText');
 
-            buttons.forEach((btn, idx) => {
-                btn.disabled = true;
-                if (idx === q.correct) {
-                    btn.classList.remove("border-indigo-600", "bg-indigo-50");
-                    btn.classList.add("border-emerald-500", "bg-emerald-50");
-                    btn.querySelector(".option-icon").classList.add("bg-emerald-600", "text-white", "border-emerald-600");
-                } else if (idx === selectedOption) {
-                    btn.classList.remove("border-indigo-600", "bg-indigo-50");
-                    btn.classList.add("border-rose-500", "bg-rose-50");
-                    btn.querySelector(".option-icon").classList.add("bg-rose-600", "text-white", "border-rose-600");
-                }
-            });
+    scoreText.innerText = `${score} / 5`;
+    
+    if (score === 5) evalText.innerText = "Sempurna! Day 1 disapu bersih dengan sempurna! 💯";
+    else if (score >= 3) evalText.innerText = "Hebat! Pemahaman awal Megy sudah mantap banget! 🔥";
+    else evalText.innerText = "Awal yang bagus! Pelajari pembahasannya dan lanjut ke Day 2! 🚀";
 
-            if (selectedOption === q.correct) {
-                score++;
-                document.getElementById("explanation-title").innerText = "✅ Tepat Sekali! Pembahasan:";
-                document.getElementById("explanation-title").className = "font-bold text-sm mb-1 text-emerald-800";
-                document.getElementById("explanation-box").className = "mb-6 p-4 rounded-xl border border-emerald-200 bg-emerald-50/60";
-            } else {
-                document.getElementById("explanation-title").innerText = "❌ Jawaban Kurang Tepat. Pembahasan:";
-                document.getElementById("explanation-title").className = "font-bold text-sm mb-1 text-rose-800";
-                document.getElementById("explanation-box").className = "mb-6 p-4 rounded-xl border border-rose-200 bg-rose-50/60";
-            }
+    resultCard.style.display = 'block';
+    resultCard.scrollIntoView({ behavior: 'smooth' });
+  }
+</script>
 
-            document.getElementById("explanation-text").innerText = q.rationale;
-            document.getElementById("explanation-box").classList.remove("hidden");
-            document.getElementById("submit-btn").classList.add("hidden");
-            document.getElementById("next-btn").classList.remove("hidden");
-        }
-
-        function nextQuestion() {
-            currentQuestion++;
-            if (currentQuestion < quizData.length) {
-                loadQuestion();
-            } else {
-                showResults();
-            }
-        }
-
-        function toggleHint() {
-            const hintBox = document.getElementById("hint-box");
-            hintBox.classList.toggle("hidden");
-        }
-
-        function showResults() {
-            document.getElementById("quiz-card").classList.add("hidden");
-            const resultCard = document.getElementById("result-card");
-            resultCard.classList.remove("hidden");
-
-            document.getElementById("score-circle").innerText = `${score}/${quizData.length}`;
-
-            let evaluation = "";
-            if (score === 5) {
-                evaluation = "Sempurna! Pemahaman konsep HOTS IPS kamu sudah sangat matang. Pertahankan konsistensi latihan harian ini!";
-            } else if (score >= 3) {
-                evaluation = "Bagus! Kamu sudah menguasai sebagian besar logika soal HOTS. Pelajari pembahasan soal yang keliru untuk memperkuat konsep.";
-            } else {
-                evaluation = "Tetap semangat! Soal HOTS memang membutuhkan analisis mendalam. Baca ulang pembahasan di atas dan coba latihan lagi besok.";
-            }
-            document.getElementById("result-evaluation").innerText = evaluation;
-        }
-
-        function restartQuiz() {
-            currentQuestion = 0;
-            score = 0;
-            document.getElementById("result-card").classList.add("hidden");
-            document.getElementById("quiz-card").classList.remove("hidden");
-            loadQuestion();
-        }
-
-        // Initialize Quiz
-        window.onload = loadQuestion;
-    </script>
 </body>
 </html>
+
 
