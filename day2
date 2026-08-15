@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Soal dari Bumona untuk Megy - Day 2</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+    </style>
+</head>
+<body class="bg-slate-100 min-h-screen text-slate-800 flex flex-col justify-between">
+
+    <!-- Header -->
+    <header class="bg-emerald-800 text-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-3xl mx-auto px-4 py-4 flex justify-between items-center">
+            <div>
+                <span class="bg-emerald-600 text-emerald-100 text-xs font-bold px-2.5 py-0.5 rounded uppercase tracking-wider">
+                    Special Prep for Megy
+                </span>
+                <h1 class="text-lg md:text-xl font-extrabold mt-1 tracking-tight">Soal dari Bumona untuk Megy - Day 2</h1>
+            </div>
+            <div class="text-right">
+                <span id="question-counter" class="text-xs md:text-sm font-semibold text-emerald-200">Soal 1 dari 5</span>
+            </div>
+        </div>
+        <!-- Progress Bar -->
+        <div class="w-full bg-emerald-950 h-2">
+            <div id="progress-bar" class="bg-amber-400 h-2 transition-all duration-300" style="width: 20%;"></div>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="max-w-3xl mx-auto px-4 py-6 w-full flex-grow">
+        
+        <!-- Quiz Card -->
+        <div id="quiz-card" class="bg-white rounded-3xl shadow-sm border border-slate-200 p-6 md:p-8 transition-all">
+            <!-- Mapel Badge -->
+            <div class="mb-4 flex justify-between items-center">
+                <span id="subject-badge" class="inline-block bg-emerald-100 text-emerald-800 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
+                    Ekonomi
+                </span>
+                <span class="text-xs text-slate-400 font-medium">TKA / UTBK SNBT</span>
+            </div>
+
+            <!-- Question Text -->
+            <div class="mb-6">
+                <p id="question-text" class="text-base md:text-lg font-semibold text-slate-900 leading-relaxed">
+                    Memuat soal...
+                </p>
+            </div>
+
+            <!-- Options Container -->
+            <div id="options-container" class="space-y-3 mb-6">
+                <!-- Populated by JS -->
+            </div>
+
+            <!-- Rationale / Pembahasan Box -->
+            <div id="explanation-box" class="hidden mb-6 p-4 rounded-2xl border transition-all">
+                <h4 id="explanation-title" class="font-bold text-sm mb-1">Pembahasan:</h4>
+                <p id="explanation-text" class="text-sm leading-relaxed"></p>
+            </div>
+
+            <!-- Action Controls -->
+            <div class="flex justify-between items-center pt-4 border-t border-slate-100">
+                <button id="hint-btn" onclick="toggleHint()" class="text-xs font-bold text-emerald-700 hover:text-emerald-900 flex items-center gap-1.5 transition">
+                    💡 Petunjuk Soal
+                </button>
+                <div class="space-x-2">
+                    <button id="submit-btn" onclick="checkAnswer()" class="bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-sm px-5 py-2.5 rounded-xl transition shadow-sm">
+                        Cek Jawaban
+                    </button>
+                    <button id="next-btn" onclick="nextQuestion()" class="hidden bg-slate-900 hover:bg-slate-800 text-white font-bold text-sm px-5 py-2.5 rounded-xl transition shadow-sm">
+                        Soal Lanjutan &rarr;
+                    </button>
+                </div>
+            </div>
+
+            <!-- Hint Box -->
+            <div id="hint-box" class="hidden mt-4 p-3.5 bg-amber-50 text-amber-900 rounded-xl text-xs border border-amber-200">
+                <span class="font-bold">Clue Megy:</span> <span id="hint-text"></span>
+            </div>
+        </div>
+
+        <!-- Result Summary Card -->
+        <div id="result-card" class="hidden bg-white rounded-3xl shadow-sm border border-slate-200 p-8 text-center">
+            <div class="w-24 h-24 bg-emerald-100 text-emerald-700 rounded-full flex items-center justify-center mx-auto mb-4 text-3xl font-black" id="score-circle">
+                0/5
+            </div>
+            <h2 class="text-2xl font-extrabold text-slate-900 mb-2">Latihan Day 2 Selesai! 🎉</h2>
+            <p id="result-evaluation" class="text-slate-600 mb-6 text-sm md:text-base font-medium">
+                Hasil evaluasi belajar Megy hari ini.
+            </p>
+            <div class="p-5 bg-slate-50 rounded-2xl mb-6 text-left border border-slate-200 space-y-2">
+                <h3 class="font-bold text-slate-800 text-sm">Pesan Semangat dari Bumona:</h3>
+                <p id="personal-note" class="text-xs md:text-sm text-slate-600 leading-relaxed">
+                    Konsistensi latihan 5 soal hritis tiap hari adalah kunci utama menaklukkan soal-soal penalaran UTBK. Tetap fokus dan jaga kesehatan!
+                </p>
+            </div>
+            <button onclick="restartQuiz()" class="bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-sm px-6 py-3 rounded-xl transition shadow-sm">
+                🔄 Coba Ulangi Day 2
+            </button>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 py-4 text-center text-xs font-medium text-slate-500">
+        <p>Soal dari Bumona untuk Megy • Persiapan Sukses UTBK / TKA IPS PTN</p>
+    </footer>
+
+    <!-- Script Data & Logic -->
+    <script>
+        const quizData = [
+            {
+                subject: "Ekonomi (Ekonomi Mikro & Internasional)",
+                question: "Pemerintah memutuskan untuk menerapkan kebijakan kuota impor terhadap produk beras demi melindungi petani dalam negeri dari gempuran harga beras pasar dunia yang lebih murah. Berdasarkan analisis efisiensi pasar dan surplus ekonomi, manakah analisis yang paling tepat mengenai dampak dari kebijakan tersebut?",
+                options: [
+                    "Surplus konsumen meningkat karena pasokan terjamin, sedangkan surplus produsen tetap.",
+                    "Surplus produsen dalam negeri meningkat, namun surplus konsumen menurun dan timbul deadweight loss (kerugian bobot mati).",
+                    "Penerimaan kas negara dari tarif impor meningkat drastis melebihi penurunan surplus konsumen.",
+                    "Surplus total masyarakat meningkat karena harga domestik turun di bawah harga pasar internasional.",
+                    "Kebijakan kuota tidak memengaruhi harga domestik maupun keseimbangan surplus ekonomi."
+                ],
+                correct: 1,
+                hint: "Kuota membatasi jumlah barang impor, sehingga pasokan domestik berkurang dan harga beras di dalam negeri naik di atas harga internasional.",
+                rationale: "Pembatasan kuota impor menyebabkan harga barang di pasar domestik naik. Hal ini menguntungkan produsen lokal (surplus produsen naik), tetapi merugikan konsumen yang harus membayar lebih mahal (surplus konsumen turun). Pembatasan ini menimbulkan Deadweight Loss (penurunan efisiensi alokasi sumber daya masyarakat secara keseluruhan)."
+            },
+            {
+                subject: "Sosiologi (Perubahan Sosial & Struktur)",
+                question: "Penerapan pesat teknologi Kecerdasan Buatan (AI) di sektor industri urban menyebabkan banyak pekerjaan rutin tergantikan secara mendadak. Para pekerja mengalami kebingungan norma peran dan kecemasan masa depan karena keahlian lama tidak lagi terpakai, sementara aturan ketenagakerjaan baru belum terbentuk secara mapan. Berdasarkan teori perubahan sosial, fenomena ini paling tepat dianalisis dengan konsep...",
+                options: [
+                    "Anomi sosial, yaitu kondisi ketidakpastian norma akibat perubahan teknologi yang sangat cepat melampaui kelembagaan sosial.",
+                    "Mobilita sosial vertikal naik secara otomatis bagi seluruh angkatan kerja tanpa perlu reskilling.",
+                    "Asimilasi struktural penuh antara kelas buruh dan pemilik modal di sektor industri modern.",
+                    "Cultural animism, yaitu kepercayaan masyarakat urban terhadap keunggulan spiritual mesin pintar.",
+                    "Disintegrasi total yang menghapuskan seluruh sistem hukum nasional."
+                ],
+                correct: 0,
+                hint: "Kondisi di mana aturan/norma lama sudah tidak relevan, tetapi norma baru belum terbentuk sehingga masyarakat kehilangan pegangan arah.",
+                rationale: "Konsep Anomi (Emile Durkheim/Robert K. Merton) terjadi ketika perubahan sosial/teknologi berlangsung cepat hingga memicu kondisi kebingungan norma (normlessness). Aturan dan kepastian masa kerja yang lama runtuh, sementara norma dan regulasi baru belum siap menampungnya."
+            },
+            {
+                subject: "Geografi (Penginderaan Jauh & SIG)",
+                question: "Suatu kota pesisir mengalami bencana banjir rob yang kian parah setiap tahun akibat kombinasi penurunan muka tanah (land subsidence) dan kenaikan permukaan air laut. Tim tata ruang ingin memetakan estimasi bahaya rob 5 tahun ke depan. Kombinasi data citra dan analisis SIG yang paling tepat untuk kebutuhan tersebut adalah...",
+                options: [
+                    "Citra Landsat kanal termal dipadukan dengan overlay peta kepadatan penduduk.",
+                    "Citra Sentinel berbasis Radar (InSAR) untuk mengukur kecepatan penurunan tanah dipadukan dengan overlay Digital Elevation Model (DEM) dan data pasang surut.",
+                    "Foto udara resolusi rendah dipadukan dengan peta batas administrasi tanpa data kontur ketinggian.",
+                    "Peta penggunaan lahan historis dipadukan dengan jaringan jalan tanpa pemodelan spasial.",
+                    "Citra pencahayaan malam hari (nighttime light) dipadukan dengan data PDRB kabupaten."
+                ],
+                correct: 1,
+                hint: "Untuk mengukur perubahan elevasi permukaan tanah yang sangat kecil (mikro) serta genangan air, dibutuhkan teknologi radar dan data ketinggian digital.",
+                rationale: "Penginderaan jauh berbasis sistem Radar (InSAR/Sentinel SAR) sangat akurat mengukur deformasi atau penurunan permukaan tanah (land subsidence) dalam hitungan milimeter. Menggabungkan data InSAR dengan DEM (Digital Elevation Model) dan data pasang surut via SIG menghasilkan pemodelan spasial zonasi rawan banjir rob yang paling akurat."
+            },
+            {
+                subject: "Sejarah Indonesia (Geopolitik & Hukum Laut)",
+                question: "Pada tanggal 13 Desember 1957, PM Djuanda Kartawidjaja mengumumkan Deklarasi Djuanda yang menggantikan aturan laut kolonial 1939 (Teritorial Zee en Maritime Kringen Ordonnantie). Signifikansi geopolitik dan integrasi nasional paling mendasar dari deklarasi ini bagi Indonesia adalah...",
+                options: [
+                    "Mengubah status laut di antara pulau-pulau Indonesia dari laut bebas/internasional menjadi laut wilayah kedaulatan utuh NKRI.",
+                    "Membuat Indonesia secara sepihak memutus seluruh jalur perdagangan internasional di Selat Malaka.",
+                    "Menghapuskan batas laut teritorial 12 mil dan menggantinya dengan konsep negara daratan tanpa laut.",
+                    "Menyerahkan seluruh pengelolaan sumber daya perikanan nasional kepada badan khusus PBB.",
+                    "Memungkinkan kapal perang asing berlayar bebas tanpa izin di perairan kepulauan Indonesia."
+                ],
+                correct: 0,
+                hint: "Aturan kolonial 1939 membuat laut di antara pulau-pulau kita dianggap sebagai kantong laut internasional yang memisahkan daratan Indonesia.",
+                rationale: "Sebelum Deklarasi Djuanda, aturan kolonial menetapkan laut teritorial hanya 3 mil dari pantai pulau. Akibatnya, laut di antara pulau-pulau (seperti Laut Java/Banda) dianggap laut bebas internasional yang membelah Indonesia. Deklarasi Djuanda menegaskan konsep Negara Kepulauan (Archipelagic State), menyatukan wilayah darat dan laut menjadi satu kesatuan NKRI yang utuh (diakui UNCLOS 1982)."
+            },
+            {
+                subject: "Penalaran Umum / Literasi (Logika Evaluasi Argumen)",
+                question: "Program insentif kendaraan listrik (EV) pemerintah bertujuan mengurangi emisi gas rumah kaca di kawasan perkotaan. Namun, kritikus menilai kebijakan ini tidak efektif karena mayoritas listrik nasional masih dipasok oleh Pembangkit Listrik Tenaga Uap (PLTU) batu bara, sehingga emisi hanya berpindah dari knalpot ke cerobong PLTU. Manakah pernyataan berikut yang paling MEMPERLEMAH argumen kritikus tersebut?",
+                options: [
+                    "Penjualan kendaraan berbahan bakar fosil masih mendominasi pasar otomotif nasional.",
+                    "Pembangkit listrik terpusat skala besar memiliki efisiensi termal jauh lebih tinggi dan kontrol filter emisi yang jauh lebih efektif dibandingkan efisiensi ribuan mesin kendaraan konvensional secara individual.",
+                    "Harga jual baterai kendaraan listrik masih tergolong mahal untuk masyarakat kelas menengah.",
+                    "Pemerintah berencana menambah kuota impor batu bara untuk menjamin pasokan energi.",
+                    "Masyarakat cenderung mengisi daya kendaraan listrik pada saat malam hari."
+                ],
+                correct: 1,
+                hint: "Cari opsi yang membuktikan bahwa meskipun memakai listrik dari PLTU, EV tetap menghasilkan emisi total yang jauh lebih efisien/sedikit dibanding mobil bensin biasa.",
+                rationale: "Pernyataan opsi B mematahkan argumen kritikus dengan menunjukkan analisis efisiensi sistemik. PLTU industri berskala besar jauh lebih efisien dalam mengonversi energi dan memiliki cerobong berfilter standar tinggi, sehingga emisi total per km dari EV tetap jauh lebih rendah dibandingkan emisi kumulatif ribuan knalpot mobil bensin di jalanan."
+            }
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+        let selectedOption = null;
+        let answered = false;
+
+        function loadQuestion() {
+            const q = quizData[currentQuestion];
+            document.getElementById("subject-badge").innerText = q.subject;
+            document.getElementById("question-text").innerText = q.question;
+            document.getElementById("question-counter").innerText = `Soal ${currentQuestion + 1} dari ${quizData.length}`;
+            document.getElementById("progress-bar").style.width = `${((currentQuestion + 1) / quizData.length) * 100}%`;
+            
+            const optionsContainer = document.getElementById("options-container");
+            optionsContainer.innerHTML = "";
+
+            q.options.forEach((opt, idx) => {
+                const btn = document.createElement("button");
+                btn.className = "w-full text-left p-4 rounded-2xl border border-slate-200 hover:border-emerald-500 hover:bg-emerald-50/40 transition duration-150 flex items-start gap-3.5 option-btn";
+                btn.onclick = () => selectOption(idx);
+                btn.innerHTML = `
+                    <span class="w-6 h-6 rounded-full border border-slate-300 flex items-center justify-center text-xs font-bold text-slate-500 shrink-0 mt-0.5 option-icon">
+                        ${String.fromCharCode(65 + idx)}
+                    </span>
+                    <span class="text-xs md:text-sm text-slate-700 font-medium leading-relaxed">${opt}</span>
+                `;
+                optionsContainer.appendChild(btn);
+            });
+
+            selectedOption = null;
+            answered = false;
+            document.getElementById("explanation-box").classList.add("hidden");
+            document.getElementById("hint-box").classList.add("hidden");
+            document.getElementById("submit-btn").classList.remove("hidden");
+            document.getElementById("next-btn").classList.add("hidden");
+            document.getElementById("hint-text").innerText = q.hint;
+        }
+
+        function selectOption(idx) {
+            if (answered) return;
+            selectedOption = idx;
+            const buttons = document.querySelectorAll(".option-btn");
+            buttons.forEach((btn, i) => {
+                if (i === idx) {
+                    btn.classList.add("border-emerald-600", "bg-emerald-50", "ring-2", "ring-emerald-600/20");
+                    btn.querySelector(".option-icon").classList.add("bg-emerald-700", "text-white", "border-emerald-700");
+                } else {
+                    btn.classList.remove("border-emerald-600", "bg-emerald-50", "ring-2", "ring-emerald-600/20");
+                    btn.querySelector(".option-icon").classList.remove("bg-emerald-700", "text-white", "border-emerald-700");
+                }
+            });
+        }
+
+        function checkAnswer() {
+            if (selectedOption === null) {
+                alert("Megy, pilih salah satu jawaban dulu ya!");
+                return;
+            }
+
+            answered = true;
+            const q = quizData[currentQuestion];
+            const buttons = document.querySelectorAll(".option-btn");
+
+            buttons.forEach((btn, idx) => {
+                btn.disabled = true;
+                if (idx === q.correct) {
+                    btn.classList.remove("border-emerald-600", "bg-emerald-50");
+                    btn.classList.add("border-emerald-500", "bg-emerald-50");
+                    btn.querySelector(".option-icon").classList.add("bg-emerald-600", "text-white", "border-emerald-600");
+                } else if (idx === selectedOption) {
+                    btn.classList.remove("border-emerald-600", "bg-emerald-50");
+                    btn.classList.add("border-rose-500", "bg-rose-50");
+                    btn.querySelector(".option-icon").classList.add("bg-rose-600", "text-white", "border-rose-600");
+                }
+            });
+
+            if (selectedOption === q.correct) {
+                score++;
+                document.getElementById("explanation-title").innerText = "✨ Jawaban Megy Tepat Sekali! Pembahasan:";
+                document.getElementById("explanation-title").className = "font-bold text-sm mb-1 text-emerald-800";
+                document.getElementById("explanation-box").className = "mb-6 p-4 rounded-2xl border border-emerald-200 bg-emerald-50/80";
+            } else {
+                document.getElementById("explanation-title").innerText = "💡 Belum Tepat, Pelajari Pembahasannya Yuk:";
+                document.getElementById("explanation-title").className = "font-bold text-sm mb-1 text-amber-800";
+                document.getElementById("explanation-box").className = "mb-6 p-4 rounded-2xl border border-amber-200 bg-amber-50/80";
+            }
+
+            document.getElementById("explanation-text").innerText = q.rationale;
+            document.getElementById("explanation-box").classList.remove("hidden");
+            document.getElementById("submit-btn").classList.add("hidden");
+            document.getElementById("next-btn").classList.remove("hidden");
+        }
+
+        function nextQuestion() {
+            currentQuestion++;
+            if (currentQuestion < quizData.length) {
+                loadQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        function toggleHint() {
+            const hintBox = document.getElementById("hint-box");
+            hintBox.classList.toggle("hidden");
+        }
+
+        function showResults() {
+            document.getElementById("quiz-card").classList.add("hidden");
+            const resultCard = document.getElementById("result-card");
+            resultCard.classList.remove("hidden");
+
+            document.getElementById("score-circle").innerText = `${score}/${quizData.length}`;
+
+            let evaluation = "";
+            let note = "";
+            if (score === 5) {
+                evaluation = "Luar biasa, Megy! Skor 5/5 sempurna!";
+                note = "Daya analisis penalaran HOTS Megy sangat tajam hari ini. Konsep ekonomi, sosiologi, geografi, sejarah, hingga penalaran kritis terkuasai dengan sangat baik!";
+            } else if (score >= 3) {
+                evaluation = "Hebat! Pemahaman Megy sudah sangat baik!";
+                note = "Hanya sedikit detail analisis yang perlu diperkuat. Baca kembali pembahasan soal yang belum tepat di atas ya!";
+            } else {
+                evaluation = "Tetap Semangat! Latihan terus!";
+                note = "Soal-soal HOTS TKA/UTBK memang didesain menguji logika berpikir mendalam. Pahami pembahasannya dan kita coba lagi di Day 3 besok!";
+            }
+            document.getElementById("result-evaluation").innerText = evaluation;
+            document.getElementById("personal-note").innerText = note;
+        }
+
+        function restartQuiz() {
+            currentQuestion = 0;
+            score = 0;
+            document.getElementById("result-card").classList.add("hidden");
+            document.getElementById("quiz-card").classList.remove("hidden");
+            loadQuestion();
+        }
+
+        window.onload = loadQuestion;
+    </script>
+</body>
+</html>
+
