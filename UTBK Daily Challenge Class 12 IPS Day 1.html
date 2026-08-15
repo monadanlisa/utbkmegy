@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UTBK & TKA Daily Challenge - Kelas 12 IPS (Hari ke-1)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #f8fafc;
+        }
+        .gradient-bg {
+            background: linear-gradient(135deg, #4f46e5 0%, #3b82f6 100%);
+        }
+        .card-shadow {
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01);
+        }
+    </style>
+</head>
+<body class="min-h-screen text-slate-800 flex flex-col justify-between">
+
+    <!-- Header -->
+    <header class="gradient-bg text-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-4xl mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <div class="bg-white/20 p-2 rounded-xl backdrop-blur-md">
+                    <i class="fa-solid fa-graduation-cap text-2xl text-white"></i>
+                </div>
+                <div>
+                    <h1 class="font-bold text-lg leading-tight">Daily UTBK Prep</h1>
+                    <p class="text-xs text-indigo-100">Khusus Kelas 12 IPS • Hari ke-1</p>
+                </div>
+            </div>
+            <div class="flex items-center space-x-2 bg-white/10 px-3 py-1.5 rounded-full backdrop-blur-md text-sm font-semibold">
+                <i class="fa-regular fa-clock text-amber-300"></i>
+                <span id="timer">00:00</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-4xl mx-auto px-4 py-6 w-full flex-grow">
+        
+        <!-- Welcome Banner / Progress -->
+        <div class="bg-white rounded-2xl p-5 mb-6 card-shadow border border-slate-100 flex flex-col sm:flex-row justify-between items-center gap-4">
+            <div>
+                <span class="inline-block px-3 py-1 bg-indigo-50 text-indigo-700 text-xs font-bold rounded-full mb-1">
+                    TARGET HARIAN: 5 SOAL HOTS
+                </span>
+                <h2 class="text-xl font-extrabold text-slate-800">Latihan Campuran Lintas Pelajaran</h2>
+                <p class="text-sm text-slate-500">Penalaran MTK, Bahasa Indonesia, Ekonomi, Geografi, Sosiologi</p>
+            </div>
+            <div class="w-full sm:w-auto flex items-center gap-3">
+                <div class="text-right hidden sm:block">
+                    <div class="text-xs text-slate-400 font-medium">Progres</div>
+                    <div class="text-sm font-bold text-indigo-600" id="progress-text">Soal 1 dari 5</div>
+                </div>
+                <div class="w-full sm:w-28 bg-slate-100 h-3 rounded-full overflow-hidden">
+                    <div id="progress-bar" class="gradient-bg h-full w-1/5 transition-all duration-300"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div id="quiz-card" class="bg-white rounded-2xl p-6 card-shadow border border-slate-100 transition-all duration-300">
+            <!-- Question Category Tag -->
+            <div class="flex justify-between items-center mb-4">
+                <span id="subject-tag" class="px-3 py-1 text-xs font-bold rounded-lg bg-indigo-100 text-indigo-700 uppercase tracking-wider">
+                    Mata Pelajaran
+                </span>
+                <span id="difficulty-tag" class="text-xs font-semibold text-amber-600 bg-amber-50 px-2.5 py-1 rounded-md border border-amber-200">
+                    <i class="fa-solid fa-fire text-amber-500 mr-1"></i> HOTS Level
+                </span>
+            </div>
+
+            <!-- Question Text -->
+            <div id="question-text" class="text-base sm:text-lg font-semibold text-slate-800 leading-relaxed mb-6">
+                Loading soal...
+            </div>
+
+            <!-- Answer Options -->
+            <div id="options-container" class="space-y-3">
+                <!-- Dynamically populated -->
+            </div>
+
+            <!-- Feedback / Explanation Box -->
+            <div id="explanation-box" class="hidden mt-6 p-4 rounded-xl border bg-slate-50 border-slate-200">
+                <div class="flex items-center space-x-2 font-bold mb-2" id="explanation-status">
+                    <!-- Dynamic Status -->
+                </div>
+                <p id="explanation-text" class="text-sm text-slate-600 leading-relaxed">
+                    Pembahasan akan tampil di sini.
+                </p>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="mt-8 flex justify-between items-center border-t border-slate-100 pt-5">
+                <button id="prev-btn" onclick="prevQuestion()" class="px-4 py-2 text-sm font-semibold text-slate-500 hover:text-slate-800 disabled:opacity-30 disabled:hover:text-slate-500 transition" disabled>
+                    <i class="fa-solid fa-arrow-left mr-1"></i> Sebelumnya
+                </button>
+                
+                <button id="next-btn" onclick="nextQuestion()" class="gradient-bg text-white px-6 py-2.5 rounded-xl text-sm font-bold shadow-md hover:opacity-95 active:scale-95 transition flex items-center space-x-2">
+                    <span id="next-btn-text">Selanjutnya</span>
+                    <i class="fa-solid fa-arrow-right text-xs"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Result Screen -->
+        <div id="result-card" class="hidden bg-white rounded-2xl p-8 card-shadow border border-slate-100 text-center">
+            <div class="w-20 h-20 mx-auto mb-4 gradient-bg rounded-full flex items-center justify-center text-white text-3xl shadow-lg">
+                <i class="fa-solid fa-trophy"></i>
+            </div>
+            <h2 class="text-2xl font-extrabold text-slate-800 mb-1">Latihan Hari Ini Selesai!</h2>
+            <p class="text-sm text-slate-500 mb-6">Kerja bagus! Berikut adalah ringkasan performanya hari ini:</p>
+
+            <div class="grid grid-cols-3 gap-3 max-w-md mx-auto mb-8">
+                <div class="p-3 bg-emerald-50 rounded-xl border border-emerald-100">
+                    <div class="text-xs text-emerald-600 font-semibold mb-1">Benar</div>
+                    <div class="text-2xl font-black text-emerald-700" id="score-correct">0</div>
+                </div>
+                <div class="p-3 bg-rose-50 rounded-xl border border-rose-100">
+                    <div class="text-xs text-rose-600 font-semibold mb-1">Salah</div>
+                    <div class="text-2xl font-black text-rose-700" id="score-wrong">0</div>
+                </div>
+                <div class="p-3 bg-indigo-50 rounded-xl border border-indigo-100">
+                    <div class="text-xs text-indigo-600 font-semibold mb-1">Skor Akhir</div>
+                    <div class="text-2xl font-black text-indigo-700" id="score-total">0%</div>
+                </div>
+            </div>
+
+            <div class="p-4 bg-slate-50 rounded-xl text-left border border-slate-200 mb-6">
+                <h4 class="font-bold text-sm text-slate-700 mb-1"><i class="fa-solid fa-lightbulb text-amber-500 mr-1"></i> Catatan Evaluasi:</h4>
+                <p id="evaluation-notes" class="text-xs text-slate-600 leading-relaxed">
+                    Memuat catatan evaluasi...
+                </p>
+            </div>
+
+            <button onclick="restartQuiz()" class="gradient-bg text-white px-8 py-3 rounded-xl font-bold text-sm shadow-lg hover:opacity-95 active:scale-95 transition">
+                <i class="fa-solid fa-rotate-right mr-2"></i>Coba Lagi Soal Hari Ini
+            </button>
+        </div>
+
+    </main>
+
+    <footer class="bg-white border-t border-slate-200 py-4 text-center text-xs text-slate-400">
+        <p>© UTBK Prep - Program Daily Challenge 5 Soal HOTS IPS</p>
+    </footer>
+
+    <script>
+        // Data Soal HOTS UTBK/TKA Hari Ke-1 (5 Soal Lintas Pelajaran IPS)
+        const questions = [
+            {
+                subject: "Penalaran Matematika",
+                color: "bg-blue-100 text-blue-700",
+                question: "Sebuah UMKM keripik pisang mencatat laba bersih bulanan (L) dalam jutaan rupiah mengikuti fungsi kuadrat L(x) = -2x² + 20x - 18, di mana x menyatakan banyaknya kuintal pisang yang diolah setiap bulan. Berapa kuintal pisang yang harus diolah agar UMKM meraih laba maksimum, dan berapakah laba maksimum tersebut?",
+                options: [
+                    "A. 5 kuintal dan Rp32.000.000",
+                    "B. 5 kuintal dan Rp18.000.000",
+                    "C. 10 kuintal dan Rp32.000.000",
+                    "D. 10 kuintal dan Rp20.000.000",
+                    "E. 4 kuintal dan Rp30.000.000"
+                ],
+                correct: 0,
+                explanation: "Fungsi laba: L(x) = -2x² + 20x - 18 dengan a = -2, b = 20, c = -18.<br>• Nilai x untuk laba maksimum (sumbu simetri) = -b / (2a) = -20 / (2*(-2)) = <b>5 kuintal</b>.<br>• Laba maksimum = L(5) = -2(5)² + 20(5) - 18 = -50 + 100 - 18 = 32 (dalam juta rupiah) = <b>Rp32.000.000</b>."
+            },
+            {
+                subject: "Literasi Bahasa Indonesia",
+                color: "bg-emerald-100 text-emerald-700",
+                question: "<b>Bacalah teks berikut secara cermat!</b><br><br><i>'Penurunan tingkat literasi keuangan di kalangan remaja usia sekolah berbanding lurus dengan tingginya perilaku konsumtif berbasis transaksi digital. Mudahnya akses terhadap layanan keuangan digital tanpa disertai kemampuan evaluasi risiko finansial memicu peningkatan utang konsumtif di usia muda.'</i><br><br>Manakah simpulan yang <b>paling logis</b> berdasarkan teks di atas?",
+                options: [
+                    "A. Layanan keuangan digital harus ditutup untuk anak sekolah agar tidak memiliki utang.",
+                    "B. Peningkatan literasi keuangan sangat penting untuk mengurangi perilaku konsumtif digital pada remaja.",
+                    "C. Remaja tidak boleh memiliki akun transaksi digital sebelum berusia 20 tahun.",
+                    "D. Perilaku konsumtif adalah penyebab utama munculnya layanan keuangan digital.",
+                    "E. Literasi keuangan hanya dipelajari oleh siswa yang mengambil jurusan Ekonomi."
+                ],
+                correct: 1,
+                explanation: "Teks menjelaskan hubungan sebab-akibat: rendahnya literasi + mudahnya akses digital = perilaku konsumtif dan utang. Maka, simpulan yang paling logis adalah peningkatan literasi keuangan diperlukan untuk meredam/mengurangi dampak negatif perilaku konsumtif tersebut."
+            },
+            {
+                subject: "Ekonomi",
+                color: "bg-amber-100 text-amber-700",
+                question: "Bank Indonesia memutuskan untuk menaikkan suku bunga acuan (BI Rate) sebesar 25 basis poin di tengah tingginya laju inflasi global. Dampak lanjutan yang paling mungkin terjadi terhadap perekonomian dalam negeri adalah...",
+                options: [
+                    "A. Jumlah uang beredar bertambah dan daya beli masyarakat meningkat pesat.",
+                    "B. Penyaluran kredit perbankan meningkat sehingga investasi meroket.",
+                    "C. Minat menabung masyarakat meningkat dan laju inflasi dapat ditekan.",
+                    "D. Harga barang impor melonjak drastis karena nilai tukar rupiah melemah.",
+                    "E. Pemerintah menurunkan tarif pajak pendapatan untuk mengimbangi BI Rate."
+                ],
+                correct: 2,
+                explanation: "Kenaikan suku bunga acuan membuat bunga simpanan/tabungan naik (masyarakat lebih tertarik menabung) dan bunga pinjaman/kredit naik (pengajuan kredit berkurang). Hal ini mengurangi jumlah uang beredar di masyarakat sehingga konsumsi melambat dan laju inflasi dapat ditekan."
+            },
+            {
+                subject: "Geografi",
+                color: "bg-teal-100 text-teal-700",
+                question: "Fenomena perkotaan menunjukkan bahwa kota besar seperti Jakarta bertindak sebagai pusat pertumbuhan yang menyerap sumber daya manusia berkualitas dan modal dari wilayah perdesaan sekitarnya, sehingga perdesaan sulit berkembang. Konsep Geografi dan efek keruangan yang menggambarkan fenomena ini adalah...",
+                options: [
+                    "A. Efek Penggenjot (Spread Effect)",
+                    "B. Efek Sedotan (Backwash Effect)",
+                    "C. Prinsip Interdependensi Desa-Kota",
+                    "D. Teori Tempat Sentral Christaller",
+                    "E. Konsep Aglomerasi Industri"
+                ],
+                correct: 1,
+                explanation: "<b>Backwash effect</b> (efek sedotan/penyedotan) terjadi ketika pertumbuhan di pusat pertumbuhan (kota) menarik modal, tenaga kerja terampil, dan bahan baku dari daerah sekitarnya (desa), sehingga menyebabkan daerah pinggiran/desa menjadi kurang berkembang."
+            },
+            {
+                subject: "Sosiologi",
+                color: "bg-purple-100 text-purple-700",
+                question: "Di sebuah sekolah, terjadi konflik antara kelompok siswa senior dan junior mengenai aturan penggunaan fasilitas lapangan basket. Pihak sekolah mengundang guru Bimbingan Konseling (BK) untuk mendampingi kedua pihak berdiskusi dan memberikan saran pemecahan masalah, namun keputusan akhir tetap diserahkan kepada kesepakatan kedua kelompok siswa. Bentuk akomodasi konflik tersebut adalah...",
+                options: [
+                    "A. Arbitrase (Arbitration)",
+                    "B. Konsiliasi (Conciliation)",
+                    "C. Mediasi (Mediation)",
+                    "D. Ajudikasi (Adjudication)",
+                    "E. Kompromi Murni"
+                ],
+                correct: 2,
+                explanation: "<b>Mediation (Mediasi)</b> adalah bentuk akomodasi konflik yang menggunakan pihak ketiga yang bersifat netral sebagai penasihat/penengah, namun pihak ketiga tersebut <i>tidak memiliki wewenang untuk mengambil keputusan binding</i> (keputusan tetap di tangan pihak yang berkonflik)."
+            }
+        ];
+
+        let currentQuestion = 0;
+        let userAnswers = new Array(questions.length).fill(null);
+        let secondsElapsed = 0;
+        let timerInterval;
+
+        window.onload = function() {
+            startTimer();
+            loadQuestion();
+        };
+
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                secondsElapsed++;
+                const mins = String(Math.floor(secondsElapsed / 60)).padStart(2, '0');
+                const secs = String(secondsElapsed % 60).padStart(2, '0');
+                document.getElementById('timer').innerText = `${mins}:${secs}`;
+            }, 1000);
+        }
+
+        function loadQuestion() {
+            const q = questions[currentQuestion];
+            
+            document.getElementById('subject-tag').innerText = q.subject;
+            document.getElementById('subject-tag').className = `px-3 py-1 text-xs font-bold rounded-lg uppercase tracking-wider ${q.color}`;
+            document.getElementById('question-text').innerHTML = `${currentQuestion + 1}. ${q.question}`;
+            document.getElementById('progress-text').innerText = `Soal ${currentQuestion + 1} dari ${questions.length}`;
+            document.getElementById('progress-bar').style.width = `${((currentQuestion + 1) / questions.length) * 100}%`;
+
+            const container = document.getElementById('options-container');
+            container.innerHTML = '';
+
+            q.options.forEach((opt, idx) => {
+                const isSelected = userAnswers[currentQuestion] === idx;
+                const btn = document.createElement('button');
+                btn.className = `w-full text-left p-4 rounded-xl border transition-all duration-200 flex items-start space-x-3 ${
+                    isSelected 
+                        ? 'border-indigo-600 bg-indigo-50/80 text-indigo-900 font-medium shadow-sm' 
+                        : 'border-slate-200 hover:border-indigo-300 hover:bg-slate-50 text-slate-700'
+                }`;
+                btn.onclick = () => selectOption(idx);
+
+                btn.innerHTML = `
+                    <div class="w-6 h-6 rounded-full border flex items-center justify-center flex-shrink-0 mt-0.5 ${
+                        isSelected ? 'border-indigo-600 bg-indigo-600 text-white' : 'border-slate-300 bg-white'
+                    }">
+                        ${isSelected ? '<i class="fa-solid fa-check text-xs"></i>' : ''}
+                    </div>
+                    <span class="text-sm sm:text-base leading-snug">${opt}</span>
+                `;
+                container.appendChild(btn);
+            });
+
+            updateExplanationState();
+
+            document.getElementById('prev-btn').disabled = currentQuestion === 0;
+
+            const nextBtnText = document.getElementById('next-btn-text');
+            if (currentQuestion === questions.length - 1) {
+                nextBtnText.innerText = "Selesai & Lihat Skor";
+            } else {
+                nextBtnText.innerText = "Selanjutnya";
+            }
+        }
+
+        function selectOption(index) {
+            userAnswers[currentQuestion] = index;
+            loadQuestion();
+        }
+
+        function updateExplanationState() {
+            const expBox = document.getElementById('explanation-box');
+            const answered = userAnswers[currentQuestion] !== null;
+
+            if (answered) {
+                expBox.classList.remove('hidden');
+                const isCorrect = userAnswers[currentQuestion] === questions[currentQuestion].correct;
+                const statusDiv = document.getElementById('explanation-status');
+                
+                if (isCorrect) {
+                    statusDiv.className = "flex items-center space-x-2 font-bold mb-2 text-emerald-600";
+                    statusDiv.innerHTML = `<i class="fa-solid fa-circle-check"></i><span>Jawaban Kamu Benar!</span>`;
+                } else {
+                    statusDiv.className = "flex items-center space-x-2 font-bold mb-2 text-rose-600";
+                    statusDiv.innerHTML = `<i class="fa-solid fa-circle-xmark"></i><span>Jawaban Kurang Tepat</span>`;
+                }
+
+                document.getElementById('explanation-text').innerHTML = questions[currentQuestion].explanation;
+            } else {
+                expBox.classList.add('hidden');
+            }
+        }
+
+        function prevQuestion() {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                loadQuestion();
+            }
+        }
+
+        function nextQuestion() {
+            if (currentQuestion < questions.length - 1) {
+                currentQuestion++;
+                loadQuestion();
+            } else {
+                finishQuiz();
+            }
+        }
+
+        function finishQuiz() {
+            clearInterval(timerInterval);
+
+            let correctCount = 0;
+            userAnswers.forEach((ans, idx) => {
+                if (ans === questions[idx].correct) correctCount++;
+            });
+
+            const wrongCount = questions.length - correctCount;
+            const scorePercentage = Math.round((correctCount / questions.length) * 100);
+
+            document.getElementById('quiz-card').classList.add('hidden');
+            document.getElementById('result-card').classList.remove('hidden');
+
+            document.getElementById('score-correct').innerText = correctCount;
+            document.getElementById('score-wrong').innerText = wrongCount;
+            document.getElementById('score-total').innerText = `${scorePercentage}%`;
+
+            const notes = document.getElementById('evaluation-notes');
+            if (scorePercentage === 100) {
+                notes.innerText = "Luar biasa! Semua soal HOTS berhasil dijawab dengan sempurna. Pertahankan konsistensi ini setiap hari ya!";
+            } else if (scorePercentage >= 60) {
+                notes.innerText = "Bagus sekali! Pemahaman konsep dasar sudah kuat. Pelajari kembali pembahasan di soal yang salah agar semakin matang.";
+            } else {
+                notes.innerText = "Jangan berkecil hati! Soal HOTS UTBK memang membutuhkan ketelitian lebih. Cermati ulang pembahasan di atas dan coba latihan lagi besok.";
+            }
+        }
+
+        function restartQuiz() {
+            currentQuestion = 0;
+            userAnswers = new Array(questions.length).fill(null);
+            secondsElapsed = 0;
+            
+            document.getElementById('result-card').classList.add('hidden');
+            document.getElementById('quiz-card').classList.remove('hidden');
+            
+            startTimer();
+            loadQuestion();
+        }
+    </script>
+</body>
+</html>
