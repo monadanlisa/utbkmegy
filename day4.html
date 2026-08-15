@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Soal dari Bumona untuk Megy - Day 4</title>
+  <style>
+    :root {
+      --bg: #f8fafc;
+      --card: #ffffff;
+      --text: #1e293b;
+      --primary: #4f46e5;
+      --primary-hover: #4338ca;
+      --success: #10b981;
+      --danger: #ef4444;
+      --border: #e2e8f0;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      margin: 0;
+      padding: 16px;
+    }
+    .container {
+      max-width: 680px;
+      margin: 0 auto;
+    }
+    .header {
+      background: linear-gradient(135deg, #4f46e5, #7c3aed);
+      color: white;
+      padding: 24px;
+      border-radius: 16px;
+      margin-bottom: 24px;
+      text-align: center;
+      box-shadow: 0 10px 15px -3px rgba(79, 70, 229, 0.2);
+    }
+    .header h1 {
+      margin: 0 0 8px 0;
+      font-size: 1.5rem;
+    }
+    .header p {
+      margin: 0;
+      opacity: 0.9;
+      font-size: 0.95rem;
+    }
+    .card {
+      background: var(--card);
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 20px;
+      border: 1px solid var(--border);
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    }
+    .badge {
+      display: inline-block;
+      background: #e0e7ff;
+      color: #3730a3;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 20px;
+      margin-bottom: 12px;
+      text-transform: uppercase;
+    }
+    .question-title {
+      font-weight: 600;
+      font-size: 1.05rem;
+      margin-bottom: 16px;
+    }
+    .options {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .option-btn {
+      background: #f8fafc;
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      padding: 12px 16px;
+      text-align: left;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      color: var(--text);
+    }
+    .option-btn:hover {
+      border-color: var(--primary);
+      background: #f1f5f9;
+    }
+    .option-btn.correct {
+      background-color: #d1fae5 !important;
+      border-color: var(--success) !important;
+      color: #065f46 !important;
+      font-weight: 600;
+    }
+    .option-btn.wrong {
+      background-color: #fee2e2 !important;
+      border-color: var(--danger) !important;
+      color: #991b1b !important;
+    }
+    .explanation {
+      display: none;
+      margin-top: 16px;
+      padding: 14px;
+      border-radius: 10px;
+      background: #f1f5f9;
+      border-left: 4px solid var(--primary);
+      font-size: 0.9rem;
+    }
+    .hint-btn {
+      background: none;
+      border: none;
+      color: var(--primary);
+      font-size: 0.85rem;
+      cursor: pointer;
+      padding: 0;
+      margin-top: 10px;
+      text-decoration: underline;
+    }
+    .hint-text {
+      display: none;
+      font-size: 0.85rem;
+      color: #64748b;
+      margin-top: 6px;
+      font-style: italic;
+    }
+    .result-card {
+      display: none;
+      text-align: center;
+      padding: 30px;
+    }
+    .score-number {
+      font-size: 3rem;
+      font-weight: 800;
+      color: var(--primary);
+      margin: 10px 0;
+    }
+    .next-nav-btn {
+      display: inline-block;
+      margin-top: 20px;
+      background: var(--primary);
+      color: white;
+      padding: 12px 24px;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: background 0.2s ease;
+    }
+    .next-nav-btn:hover {
+      background: var(--primary-hover);
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <div class="header">
+    <h1>Soal dari Bumona untuk Megy</h1>
+    <p>Day 4 - Hitungan Akuntansi, Ekonomi & Bahasa Indonesia (TKA/UTBK)</p>
+  </div>
+
+  <!-- Soal 1 -->
+  <div class="card" id="q1">
+    <span class="badge">AKUNTANSI • HITUNGAN HOTS</span>
+    <div class="question-title">1. Pada 1 Oktober 2025, Salon Megy membayar sewa gedung untuk 1 tahun sebesar Rp24.000.000,00 dan dicatat menggunakan <strong>pendekatan beban</strong> (<em>Beban Sewa</em>). Ayat jurnal penyesuaian yang tepat pada tanggal 31 Desember 2025 adalah...</div>
+    <div class="options">
+      <button class="option-btn" onclick="checkAnswer(1, 'A')">A. (D) Beban Sewa Rp6.000.000,00 | (K) Sewa Dibayar di Muka Rp6.000.000,00</button>
+      <button class="option-btn" onclick="checkAnswer(1, 'B')">B. (D) Sewa Dibayar di Muka Rp18.000.000,00 | (K) Beban Sewa Rp18.000.000,00</button>
+      <button class="option-btn" onclick="checkAnswer(1, 'C')">C. (D) Sewa Dibayar di Muka Rp6.000.000,00 | (K) Beban Sewa Rp6.000.000,00</button>
+      <button class="option-btn" onclick="checkAnswer(1, 'D')">D. (D) Beban Sewa Rp18.000.000,00 | (K) Kas Rp18.000.000,00</button>
+      <button class="option-btn" onclick="checkAnswer(1, 'E')">E. (D) Kas Rp6.000.000,00 | (K) Sewa Dibayar di Muka Rp6.000.000,00</button>
+    </div>
+    <button class="hint-btn" onclick="toggleHint(1)">💡 Butuh Petunjuk?</button>
+    <div class="hint-text" id="hint1">Sewa per bulan = 24 juta / 12 = 2 juta. Yang sudah berjalan (Okt-Des) = 3 bulan (6 juta). Yang belum berjalan (Jan-Sep tahun depan) = 9 bulan (18 juta). Karena dicatat sebagai BEBAN di awal, buatlah penyesuaian untuk nilai yang BELUM TERPAKAI (Aset).</div>
+    <div class="explanation" id="exp1">
+      <strong>Jawaban Benar: B</strong><br>
+      <em>Pembahasan:</em><br>
+      - Sewa per bulan = Rp24.000.000 / 12 = Rp2.000.000.<br>
+      - Yang sudah dijalani (Okt, Nov, Des) = 3 bulan × Rp2.000.000 = Rp6.000.000 (menjadi beban).<br>
+      - Yang belum dijalani = 9 bulan × Rp2.000.000 = Rp18.000.000 (masih aset).<br>
+      - Karena transaksi awal dicatat sebagai <em>Beban Sewa</em>, maka jurnal penyesuaian akhir tahun bertugas memindahkan bagian yang **belum terpakai** ke akun aset (Sewa Dibayar di Muka):<br>
+      <strong>(D) Sewa Dibayar di Muka Rp18.000.000,00</strong><br>
+      <strong>(K) Beban Sewa Rp18.000.000,00</strong>
+    </div>
+  </div>
+
+  <!-- Soal 2 -->
+  <div class="card" id="q2">
+    <span class="badge">EKONOMIS • HITUNGAN KESEIMBANGAN PASAR</span>
+    <div class="question-title">2. Fungsi permintaan suatu barang dinyatakan oleh Q<sub>d</sub> = 100 - 2P dan fungsi penawaran Q<sub>s</sub> = -20 + 2P. Jika pemerintah mengenakan pajak spesifik sebesar Rp10,00 per unit barang, maka <strong>harga keseimbangan pasar yang baru (P')</strong> setelah pajak adalah...</div>
+    <div class="options">
+      <button class="option-btn" onclick="checkAnswer(2, 'A')">A. Rp30,00</button>
+      <button class="option-btn" onclick="checkAnswer(2, 'B')">B. Rp35,00</button>
+      <button class="option-btn" onclick="checkAnswer(2, 'C')">C. Rp40,00</button>
+      <button class="option-btn" onclick="checkAnswer(2, 'D')">D. Rp45,00</button>
+      <button class="option-btn" onclick="checkAnswer(2, 'E')">E. Rp50,00</button>
+    </div>
+    <button class="hint-btn" onclick="toggleHint(2)">💡 Butuh Petunjuk?</button>
+    <div class="hint-text" id="hint2">Pajak mengubah fungsi penawaran P = f(Q) + t. Dari Qs = -20 + 2P, dapatkan P = 0,5Q + 10. Tambahkan pajak 10 rupiah, lalu samakan kembali Qd = Qs'.</div>
+    <div class="explanation" id="exp2">
+      <strong>Jawaban Benar: B</strong><br>
+      <em>Pembahasan:</em><br>
+      1. Ubah Q<sub>s</sub> ke bentuk P: 2P = Q + 20 ➔ P<sub>s</sub> = 0,5Q + 10.<br>
+      2. Setelah pajak t = 10: P<sub>s</sub>' = 0,5Q + 10 + 10 = 0,5Q + 20.<br>
+      3. Ubah kembali ke Q<sub>s</sub>': 0,5Q = P - 20 ➔ Q<sub>s</sub>' = 2P - 40.<br>
+      4. Keseimbangan baru (Q<sub>d</sub> = Q<sub>s</sub>'):<br>
+         100 - 2P = 2P - 40<br>
+         4P = 140 ➔ <strong>P' = 35</strong>.
+    </div>
+  </div>
+
+  <!-- Soal 3 -->
+  <div class="card" id="q3">
+    <span class="badge">BAHASA INDONESIA • LITERASI UTBK</span>
+    <div class="question-title">3. Bacalah teks paragraf berikut!<br><br>
+    <em>"(1) Penggunaan pupuk organik secara berkelanjutan tidak hanya memulihkan struktur tanah yang rusak akibat pemupukan kimiawi jangka panjang, tetapi juga meningkatkan daya serap tanah terhadap air. (2) Tanah yang kaya akan bahan organik mampu menyimpan air lebih lama sehingga tanaman tidak mudah layu saat musim kemarau tiba. (3) Selain itu, keberadaan mikroorganisme menguntungkan di dalam tanah akan berkembang pesat seiring meningkatnya kadar bahan organik. (4) Kehadiran mikroorganisme ini membantu menguraikan unsur hara kompleks menjadi senyawa sederhana yang siap diserap oleh akar tanaman. (5) Oleh karena itu, pengalihan sistem pertanian menuju pertanian organik menjadi langkah strategis demi menjaga ketahanan pangan nasional secara berkelanjutan."</em><br><br>
+    <strong>Gagasan utama</strong> dari paragraf di atas adalah...</div>
+    <div class="options">
+      <button class="option-btn" onclick="checkAnswer(3, 'A')">A. Dampak buruk penggunaan pupuk kimiawi jangka panjang pada tanah pertanian</button>
+      <button class="option-btn" onclick="checkAnswer(3, 'B')">B. Manfaat penggunaan pupuk organik dalam memulihkan dan menjaga keberlanjutan tanah pertanian</button>
+      <button class="option-btn" onclick="checkAnswer(3, 'C')">C. Peran penting mikroorganisme tanah dalam menguraikan unsur hara kompleks bagi tanaman</button>
+      <button class="option-btn" onclick="checkAnswer(3, 'D')">D. Penyebab utama tanaman pertanian tidak mudah layu saat memasuki musim kemarau</button>
+      <button class="option-btn" onclick="checkAnswer(3, 'E')">E. Pentingnya meningkatkan volume produksi panen demi ketahanan pangan nasional</button>
+    </div>
+    <button class="hint-btn" onclick="toggleHint(3)">💡 Butuh Petunjuk?</button>
+    <div class="hint-text" id="hint3">Perhatikan kalimat utama (kalimat 1) dan simpulan penutup (kalimat 5) yang membahas fokus topik pupuk organik dan manfaatnya.</div>
+    <div class="explanation" id="exp3">
+      <strong>Jawaban Benar: B</strong><br>
+      <em>Pembahasan:</em> Paragraf tersebut dikembangkan dengan ide pokok mengenai berbagai manfaat positif pemupukan organik bagi kesuburan dan daya tahan tanah, yang kemudian dirinci oleh kalimat-kalimat penjelasnya.
+    </div>
+  </div>
+
+  <!-- Soal 4 -->
+  <div class="card" id="q4">
+    <span class="badge">BAHASA INDONESIA • KALIMAT EFEKTIF</span>
+    <div class="question-title">4. Cermati kalimat berikut!<br><br>
+    <em>"Meskipun pemerintah telah meluncurkan berbagai program pelatihan kewirausahaan untuk pemuda di pedesaan, namun sebagian besar peserta masih kesulitan untuk mengakses permodalan usaha dari lembaga keuangan formal."</em><br><br>
+    Perbaikan paling tepat agar kalimat di atas menjadi <strong>kalimat efektif</strong> sesuai aturan PUEBI/EYD adalah...</div>
+    <div class="options">
+      <button class="option-btn" onclick="checkAnswer(4, 'A')">A. Menghilangkan kata <em>Meskipun</em> di awal kalimat</button>
+      <button class="option-btn" onclick="checkAnswer(4, 'B')">B. Menghilangkan kata <em>namun</em> setelah tanda koma</button>
+      <button class="option-btn" onclick="checkAnswer(4, 'C')">C. Mengganti kata <em>meluncurkan</em> menjadi <em>diluncurkan</em></button>
+      <button class="option-btn" onclick="checkAnswer(4, 'D')">D. Mengubah kata <em>kesulitan</em> menjadi <em>mempunyai kesulitan</em></button>
+      <button class="option-btn" onclick="checkAnswer(4, 'E')">E. Menambahkan kata <em>bahwa</em> sebelum kata <em>sebagian</em></button>
+    </div>
+    <button class="hint-btn" onclick="toggleHint(4)">💡 Butuh Petunjuk?</button>
+    <div class="hint-text" id="hint4">Ingat aturan konjungsi: Kata hubung bertentangan/anak kalimat ("Meskipun") TIDAK BOLEH disandingkan bersamaan dengan kata hubung pertentangan induk kalimat ("namun").</div>
+    <div class="explanation" id="exp4">
+      <strong>Jawaban Benar: B</strong><br>
+      <em>Pembahasan:</em> Penggunaan konjungsi subordinatif pertentangan (*Meskipun*) dan konjungsi antarkalimat (*namun*) secara berbarengan dalam satu kalimat menyebabkan kalimat kehilangan Induk Kalimat (kalimat beranak tanpa induk). Solusinya adalah **menghilangkan kata *namun***.
+    </div>
+  </div>
+
+  <!-- Soal 5 -->
+  <div class="card" id="q5">
+    <span class="badge">AKUNTANSI • PENALARAN MATEMATIKA</span>
+    <div class="question-title">5. Data keuangan <em>Megy Express</em> pada akhir periode 31 Desember 2025 adalah sebagai berikut:<br>
+    • Modal Awal (1 Jan 2025): Rp50.000.000,00<br>
+    • Pendapatan Jasa: Rp35.000.000,00<br>
+    • Beban Gaji Karyawan: Rp12.000.000,00<br>
+    • Beban Sewa Kantor: Rp5.000.000,00<br>
+    • Beban Perlengkapan: Rp3.000.000,00<br>
+    • Pengambilan Pribadi (Prive Megy): Rp2.000.000,00<br><br>
+    Berapakah besarnya <strong>Modal Akhir</strong> Megy Express per 31 Desember 2025?</div>
+    <div class="options">
+      <button class="option-btn" onclick="checkAnswer(5, 'A')">A. Rp63.000.000,00</button>
+      <button class="option-btn" onclick="checkAnswer(5, 'B')">B. Rp65.000.000,00</button>
+      <button class="option-btn" onclick="checkAnswer(5, 'C')">C. Rp67.000.000,00</button>
+      <button class="option-btn" onclick="checkAnswer(5, 'D')">D. Rp70.000.000,00</button>
+      <button class="option-btn" onclick="checkAnswer(5, 'E')">E. Rp83.000.000,00</button>
+    </div>
+    <button class="hint-btn" onclick="toggleHint(5)">💡 Butuh Petunjuk?</button>
+    <div class="hint-text" id="hint5">Rumus Modal Akhir = Modal Awal + Laba Bersih - Prive. Laba Bersih = Total Pendapatan - Total Beban.</div>
+    <div class="explanation" id="exp5">
+      <strong>Jawaban Benar: A</strong><br>
+      <em>Pembahasan:</em><br>
+      1. Total Beban = 12 jt + 5 jt + 3 jt = Rp20.000.000,00.<br>
+      2. Laba Bersih = Pendapatan (35 jt) - Total Beban (20 jt) = Rp15.000.000,00.<br>
+      3. Modal Akhir = Modal Awal (50 jt) + Laba Bersih (15 jt) - Prive (2 jt) = <strong>Rp63.000.000,00</strong>.
+    </div>
+  </div>
+
+  <!-- Ringkasan Hasil -->
+  <div class="card result-card" id="resultCard">
+    <h2>🎉 Kuis Day 4 Selesai!</h2>
+    <p>Hasil Kuis Day 4 Megy:</p>
+    <div class="score-number" id="scoreText">0 / 5</div>
+    <p id="evalText" style="color: #475569; font-weight: 500;"></p>
+
+    <!-- Navigasi Otomatis ke Day 5 -->
+    <a href="day5.html" class="next-nav-btn">Lanjut ke Day 5 ➔</a>
+  </div>
+</div>
+
+<script>
+  const correctAnswers = { 1: 'B', 2: 'B', 3: 'B', 4: 'B', 5: 'A' };
+  let userAnswers = {};
+  let answeredCount = 0;
+
+  function checkAnswer(qNum, selectedOption) {
+    if (userAnswers[qNum]) return;
+
+    userAnswers[qNum] = selectedOption;
+    answeredCount++;
+
+    const options = document.querySelectorAll(`#q${qNum} .option-btn`);
+    const correctOpt = correctAnswers[qNum];
+
+    options.forEach(btn => {
+      btn.disabled = true;
+      const optLetter = btn.innerText.charAt(0);
+      if (optLetter === correctOpt) {
+        btn.classList.add('correct');
+      }
+      if (optLetter === selectedOption && selectedOption !== correctOpt) {
+        btn.classList.add('wrong');
+      }
+    });
+
+    document.getElementById(`exp${qNum}`).style.display = 'block';
+
+    if (answeredCount === 5) {
+      showResults();
+    }
+  }
+
+  function toggleHint(qNum) {
+    const hint = document.getElementById(`hint${qNum}`);
+    hint.style.display = hint.style.display === 'block' ? 'none' : 'block';
+  }
+
+  function showResults() {
+    let score = 0;
+    for (let i = 1; i <= 5; i++) {
+      if (userAnswers[i] === correctAnswers[i]) score++;
+    }
+
+    const resultCard = document.getElementById('resultCard');
+    const scoreText = document.getElementById('scoreText');
+    const evalText = document.getElementById('evalText');
+
+    scoreText.innerText = `${score} / 5`;
+    
+    if (score === 5) evalText.innerText = "Sempurna! Hitungan Akuntansi & Bahasa Indonesia Megy joss banget! 💯";
+    else if (score >= 3) evalText.innerText = "Keren! Penalaran angka & analisis kalimatnya sudah makin matang! 🔥";
+    else evalText.innerText = "Tetap semangat! Pelajari langkah hitungannya, besok kita hajar lagi di Day 5! 🚀";
+
+    resultCard.style.display = 'block';
+    resultCard.scrollIntoView({ behavior: 'smooth' });
+  }
+</script>
+
+</body>
+</html>
